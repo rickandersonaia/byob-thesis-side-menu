@@ -37,11 +37,6 @@
 
 class byob_thesis_side_menu extends thesis_box {
 
-//	 search and replace
-//	 BYOBTSM
-//	 byobtsm
-//   byob_thesis_side_menu
-
 	public $type = 'box';
 
 	public function translate() {
@@ -80,24 +75,8 @@ class byob_thesis_side_menu extends thesis_box {
 	 */
 	protected function html_options() {
 		global $thesis;
-
-		return array(
-			'menu_id'    => array(
-				'type'    => 'text',
-				'width'   => 'medium',
-				'code'    => true,
-				'label'   => __( 'HTML ID for the menu', 'thesis' ),
-				'tooltip' => __( 'Optional HTML ID to be assigned to the menu', 'thesis' )
-			),
-			'menu_class' => array(
-				'type'        => 'text',
-				'width'       => 'medium',
-				'code'        => true,
-				'label'       => __( 'HTML class for the menu', 'thesis' ),
-				'tooltip'     => __( 'By default the menu class will be set automatically.  You can add an additonal class here if you wish', 'thesis' ),
-				'placeholder' => 'sidenav'
-			)
-		);
+		$html = $thesis->api->html_options();
+		return $html;
 	}
 
 	/**
@@ -133,6 +112,45 @@ class byob_thesis_side_menu extends thesis_box {
 		);
 	}
 
+	public function preload() {
+		add_action('wp_enqueue_scripts', array($this, 'add_scripts'));
+		add_action('wp_enqueue_scripts', array($this, 'add_styles'));
+		add_action('hook_before_html', array($this, 'insert_menu'), 99);
+		add_action('hook_after_html', array($this, 'close_main'), 1);
+	}
+
+	public function add_scripts(){
+		wp_enqueue_script('byobtsm-side-menu',BYOBTSM_URL . '/assets/js/byobtsm-side-menu.js');
+	}
+
+	public function add_styles(){
+		wp_enqueue_style('byobtsm-side-menu',BYOBTSM_URL . '/assets/css/byobtsm-styles.css');
+	}
+
+	public function insert_menu(){
+		$tab     = str_repeat( "\t", 2 );
+		$args = array(
+			'menu' => $this->options['menu'],
+			'menu_class' => 'side-navigation',
+			'container' => false
+		);
+
+		echo "<div id='byobtsm-sidenav-wrapper' class='sidenav'>";
+		echo "$tab\t<div id=\"nav-icon2\" onclick=\"closeNav()\">\n";
+		echo "$tab\t\t<span></span>\n";
+		echo "$tab\t\t<span></span>\n";
+		echo "$tab\t\t<span></span>\n";
+		echo "$tab\t</div>\n";
+		wp_nav_menu($args);
+		echo '</div>';
+		echo '<div id="byobtsm-content-wrapper">';
+	}
+
+	public function close_main(){
+		echo "\t<div id=\"byobtsm-overlay\" onclick=\"closeNav()\"></div>\n";
+		echo "</div>\n";
+	}
+
 
 	/**
 	 * @param array $args - a variable containing $depth and other potential data
@@ -145,16 +163,24 @@ class byob_thesis_side_menu extends thesis_box {
 		extract( $args = is_array( $args ) ? $args : array() );
 		$depth   = isset( $depth ) ? $depth : 0;
 		$tab     = str_repeat( "\t", $depth );
-		$html    = ! empty( $this->options['html'] ) ? trim( esc_attr( $this->options['html'] ) ) : 'div';
-		$class   = ! empty( $this->options['class'] ) ? ' class="' . trim( esc_attr( $this->options['class'] ) ) . '"' : '';
-		$id      = ( ! empty( $this->options['id'] ) ? ' id="' . trim( esc_attr( $this->options['id'] ) ) . '"' : '' );
-		$message = ! empty( $this->options['message'] ) ? trim( wp_kses_post( $this->options['message'] ) ) : false;
+		$html    = 'div';
+		$id      = ( ! empty( $this->options['id'] )
+			? ' id="' . trim( esc_attr( $this->options['id'] ) ) . '"'
+			: '' );
+		$class   = ! empty( $this->options['class'] )
+			? ' class="' . trim( esc_attr( $this->options['class'] ) ) . ' byobtsm-menu-button"'
+			: ' class="byobtsm-menu-button"';
+		$open_text = ! empty( $this->options['open_text'] )
+			? trim( wp_kses_post( $this->options['open_text'] ) )
+			: 'Menu';
 
 		echo "$tab<$html$id$class>\n";
-		if ( $message ) {
-			echo $message;
-		}
-		echo $this->rotator( array_merge( $args, array( 'depth' => $depth + 1 ) ) );
+		echo "$tab\t<div id=\"nav-icon1\" onclick=\"openNav()\">\n";
+		echo "$tab\t\t<span></span>\n";
+		echo "$tab\t\t<span></span>\n";
+		echo "$tab\t\t<span></span>\n";
+		echo "$tab\t</div>\n";
+		echo "<span class=\"byobtsm-open-text\"> $open_text</span>";
 		echo "$tab</$html>\n";
 	}
 
