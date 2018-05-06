@@ -40,7 +40,7 @@ class byob_thesis_side_menu extends thesis_box {
 	public $type = 'box';
 
 	public function translate() {
-		$this->title = $this->name = __( 'BYOB Side Menu', 'byobtsm' );
+		$this->title = $this->name = __( 'BYOB Side Menu', 'byobsm' );
 	}
 
 	/**
@@ -49,20 +49,23 @@ class byob_thesis_side_menu extends thesis_box {
 	protected function construct() {
 		global $byob_ah;;
 
-		if ( ! defined( 'BYOBTSM_PATH' ) ) {
-			define( 'BYOBTSM_PATH', dirname( __FILE__ ) );
+		if ( ! defined( 'BYOBSM_PATH' ) ) {
+			define( 'BYOBSM_PATH', dirname( __FILE__ ) );
 		}
-		if ( ! defined( 'BYOBTSM_URL' ) ) {
-			define( 'BYOBTSM_URL', THESIS_USER_BOXES_URL . '/' . basename( __DIR__ ) );
+		if ( ! defined( 'BYOBSM_URL' ) ) {
+			define( 'BYOBSM_URL', THESIS_USER_BOXES_URL . '/' . basename( __DIR__ ) );
 		}
 
 
 		if ( is_admin() ) {
 			if ( ! class_exists( 'byob_asset_handler' ) ) {
-				include_once( BYOBTSM_PATH . '/byob_asset_handler.php' );
+				include_once( BYOBSM_PATH . '/byob_asset_handler.php' );
 			}
 			if ( ! isset( $my_asset_handler ) ) {
 				$byob_ah = new byob_asset_handler;
+			}
+			if ( ! class_exists( 'byobsm_design_options' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_design_options.php' );
 			}
 		}
 	}
@@ -76,6 +79,7 @@ class byob_thesis_side_menu extends thesis_box {
 	protected function html_options() {
 		global $thesis;
 		$html = $thesis->api->html_options();
+
 		return $html;
 	}
 
@@ -112,42 +116,113 @@ class byob_thesis_side_menu extends thesis_box {
 		);
 	}
 
-	public function preload() {
-		add_action('wp_enqueue_scripts', array($this, 'add_scripts'));
-		add_action('wp_enqueue_scripts', array($this, 'add_styles'));
-		add_action('hook_before_html', array($this, 'insert_menu'), 99);
-		add_action('hook_after_html', array($this, 'close_main'), 1);
-	}
-
-	public function add_scripts(){
-		wp_enqueue_script('byobtsm-side-menu',BYOBTSM_URL . '/assets/js/byobtsm-side-menu.js');
-	}
-
-	public function add_styles(){
-		wp_enqueue_style('byobtsm-side-menu',BYOBTSM_URL . '/assets/css/byobtsm-styles.css');
-	}
-
-	public function insert_menu(){
-		$tab     = str_repeat( "\t", 2 );
-		$args = array(
-			'menu' => $this->options['menu'],
-			'menu_class' => 'side-navigation',
-			'container' => false
+	protected function class_options() {
+		$fields  = new byobsm_design_options();
+		$options = array(
+			'style_types' => array(
+				'type'    => 'object_set',
+				'label'   => __( 'Sliding Menu Style Options', 'byobsm' ),
+				'select'  => __( 'Choose the Elements to configure:', 'byobsm' ),
+				'objects' => array(
+					'open_button' => array(
+						'type'   => 'object',
+						'label'  => __( 'Open Menu Button Styles', 'byobsm' ),
+						'fields' => $fields->open_button()
+					),
+					'open_button_icon' => array(
+						'type' => 'object',
+						'label' => __('Open Menu Icon Styles', 'byobsm'),
+						'fields' => $fields->open_button_icon()
+					),
+					'open_button_hover' => array(
+						'type' => 'object',
+						'label' => __('Open Menu Button Hover Styles', 'byobsm'),
+						'fields' => $fields->open_button_hover()
+					),
+					'open_button_icon_hover' => array(
+						'type' => 'object',
+						'label' => __('Open Menu Icon Hover Styles', 'byobsm'),
+						'fields' => $fields->open_button_icon_hover()
+					),
+					'close_button' => array(
+						'type' => 'object',
+						'label' => __('Close Menu Button Styles', 'byobsm'),
+						'fields' => $fields->close_button()
+					),
+					'close_button_icon' => array(
+						'type' => 'object',
+						'label' => __('Close Menu Icon Styles', 'byobsm'),
+						'fields' => $fields->close_button_icon()
+					),
+					'close_button_hover' => array(
+						'type' => 'object',
+						'label' => __('Close Menu Button Hover Styles', 'byobsm'),
+						'fields' => $fields->close_button_hover()
+					),
+					'close_button_icon_hover' => array(
+						'type' => 'object',
+						'label' => __('Close Menu Icon Hover Styles', 'byobsm'),
+						'fields' => $fields->close_button_icon_hover()
+					),
+					'menu_styles' => array(
+						'type' => 'object',
+						'label' => __('Menu Style Configuration', 'byobsm'),
+						'fields' => $fields->navigation()
+					),
+					'overlay_styles' => array(
+						'type' => 'object',
+						'label' => __('Overlay Styles', 'byobsm'),
+						'fields' => ''
+					)
+				)
+			)
 		);
 
-		echo "<div id='byobtsm-sidenav-wrapper' class='sidenav'>";
-		echo "$tab\t<div id=\"nav-icon2\" onclick=\"closeNav()\">\n";
+		return $options;
+	}
+
+	public function preload() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'add_styles' ) );
+		add_action( 'hook_before_html', array( $this, 'insert_menu' ), 99 );
+		add_action( 'hook_after_html', array( $this, 'close_main' ), 1 );
+	}
+
+	public function add_scripts() {
+		wp_enqueue_script( 'byobsm-side-menu', BYOBSM_URL . '/assets/js/byobsm-side-menu.js' );
+	}
+
+	public function add_styles() {
+		wp_enqueue_style( 'byobsm-side-menu', BYOBSM_URL . '/assets/css/byobsm-styles.css' );
+	}
+
+	public function insert_menu() {
+		$tab        = str_repeat( "\t", 2 );
+		$args       = array(
+			'menu'       => $this->options['menu'],
+			'menu_class' => 'side-navigation',
+			'container'  => false
+		);
+		$close_text = ! empty( $this->options['close_tex'] )
+			? trim( wp_kses_post( $this->options['close_tex'] ) )
+			: 'Close';
+
+		echo "<div id='byobsm-sidenav-wrapper' class='sidenav'>";
+		echo "$tab<div class=\"byobsm-close-menu-button\" onclick=\"closeNav()\">\n";
+		echo "$tab\t<div id=\"close-icon\">\n";
 		echo "$tab\t\t<span></span>\n";
 		echo "$tab\t\t<span></span>\n";
 		echo "$tab\t\t<span></span>\n";
 		echo "$tab\t</div>\n";
-		wp_nav_menu($args);
+		echo "<span class=\"byobsm-close-text\"> $close_text</span>";
+		echo "$tab</div>\n";
+		wp_nav_menu( $args );
 		echo '</div>';
-		echo '<div id="byobtsm-content-wrapper">';
+		echo '<div id="byobsm-content-wrapper">';
 	}
 
-	public function close_main(){
-		echo "\t<div id=\"byobtsm-overlay\" onclick=\"closeNav()\"></div>\n";
+	public function close_main() {
+		echo "\t<div id=\"byobsm-overlay\" onclick=\"closeNav()\"></div>\n";
 		echo "</div>\n";
 	}
 
@@ -161,26 +236,26 @@ class byob_thesis_side_menu extends thesis_box {
 	public function html( $args = array() ) {
 		global $thesis;
 		extract( $args = is_array( $args ) ? $args : array() );
-		$depth   = isset( $depth ) ? $depth : 0;
-		$tab     = str_repeat( "\t", $depth );
-		$html    = 'div';
-		$id      = ( ! empty( $this->options['id'] )
+		$depth     = isset( $depth ) ? $depth : 0;
+		$tab       = str_repeat( "\t", $depth );
+		$html      = 'div';
+		$id        = ( ! empty( $this->options['id'] )
 			? ' id="' . trim( esc_attr( $this->options['id'] ) ) . '"'
 			: '' );
-		$class   = ! empty( $this->options['class'] )
-			? ' class="' . trim( esc_attr( $this->options['class'] ) ) . ' byobtsm-menu-button"'
-			: ' class="byobtsm-menu-button"';
+		$class     = ! empty( $this->options['class'] )
+			? ' class="' . trim( esc_attr( $this->options['class'] ) ) . ' byobsm-menu-button"'
+			: ' class="byobsm-menu-button"';
 		$open_text = ! empty( $this->options['open_text'] )
 			? trim( wp_kses_post( $this->options['open_text'] ) )
 			: 'Menu';
 
-		echo "$tab<$html$id$class>\n";
-		echo "$tab\t<div id=\"nav-icon1\" onclick=\"openNav()\">\n";
+		echo "$tab<$html$id$class onclick=\"openNav()\">\n";
+		echo "$tab\t<div id=\"open-icon\">\n";
 		echo "$tab\t\t<span></span>\n";
 		echo "$tab\t\t<span></span>\n";
 		echo "$tab\t\t<span></span>\n";
 		echo "$tab\t</div>\n";
-		echo "<span class=\"byobtsm-open-text\"> $open_text</span>";
+		echo "<span class=\"byobsm-open-text\"> $open_text</span>";
 		echo "$tab</$html>\n";
 	}
 

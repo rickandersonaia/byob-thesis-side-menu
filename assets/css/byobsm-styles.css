@@ -11,8 +11,9 @@
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
-.sidenav.byobtsm-open{
-    width:400px;
+
+.sidenav.byobsm-open {
+    width: 400px;
 }
 
 /* The navigation menu links */
@@ -24,62 +25,84 @@
     display: block;
     transition: 0.3s;
 }
-.sidenav > ul > li{
-    padding-left:30px;
-}
-
-.sidenav .sub-menu{
-    padding-left:10px;
-}
-
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
     color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
-
-#byobtsm-overlay.byobtsm-content-overlay{
-    background-color:#fff;
-    transition: background-color 1s;
+/* list style & arrangement */
+.sidenav ul {
+    list-style: none;
 }
 
-#byobtsm-overlay.byobtsm-content-overlay{
-    position: absolute;
-    top:0;
-    width:100%;
-    height:100%;
-    background-color:rgba(0,0,0,0.5);
-    z-index: 100;
+.sidenav > ul > li {
+    padding-left: 30px;
+}
+
+.sidenav .sub-menu {
+    padding-left: 10px;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#byobtsm-content-wrapper {
+#byobsm-content-wrapper {
     transition: margin-left .5s;
-    position:relative;
-}
-#byobtsm-content-wrapper.byobtsm-open {
-    margin-left:400px;
+    position: relative;
 }
 
-.byobtsm-menu-button{
-    float:left;
-    padding-top:12px;
+#byobsm-content-wrapper.byobsm-open {
+    margin-left: 400px;
 }
-.byobtsm-menu-button:after{
+
+/* overlay styles */
+
+#byobsm-overlay.byobsm-content-overlay {
+    background-color: #fff;
+    transition: background-color 1s;
+}
+
+#byobsm-overlay.byobsm-content-overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+/* button styles */
+.byobsm-menu-button {
+    float: left;
+    padding-top: 12px;
+}
+
+.byobsm-close-menu-button {
+    float: right;
+    padding-top: 12px;
+}
+
+.byobsm-menu-button:after,
+.byobsm-close-menu-button:after {
     content: "";
     display: table;
     clear: both;
 }
-.byobtsm-open-text{
-    font-size:18px;
-    line-height:18px;
-    padding:9px;
+
+.byobsm-open-text,
+.byobsm-close-text {
+    font-size: 18px;
+    line-height: 18px;
+    padding: 9px;
     display: inline-block;
 }
-#nav-icon1,
-#nav-icon2{
+
+.byobsm-close-text {
+    color:#f1f1f1;
+}
+
+/* icon styles */
+#open-icon,
+#close-icon {
     width: 42px;
     height: 36px;
     position: relative;
@@ -94,12 +117,13 @@
     cursor: pointer;
     float: left;
 }
-#nav-icon2{
-    float:right;
+
+#close-icon {
+    float: right;
 }
 
-#nav-icon1 span,
-#nav-icon2 span{
+#open-icon span,
+#close-icon span {
     display: block;
     position: absolute;
     height: 6px;
@@ -118,23 +142,23 @@
     transition: .25s ease-in-out;
 }
 
-#nav-icon1 span:nth-child(1),
-#nav-icon2 span:nth-child(1){
+#open-icon span:nth-child(1),
+#close-icon span:nth-child(1) {
     top: 0px;
 }
 
-#nav-icon1 span:nth-child(2),
-#nav-icon1 span:nth-child(2){
+#open-icon span:nth-child(2),
+#open-icon span:nth-child(2) {
     top: 12px;
 }
 
-#nav-icon1 span:nth-child(3),
-#nav-icon2 span:nth-child(3){
+#open-icon span:nth-child(3),
+#close-icon span:nth-child(3) {
     top: 24px;
 }
 
-#nav-icon1.open span:nth-child(1),
-#nav-icon2.open span:nth-child(1){
+#open-icon.open span:nth-child(1),
+#close-icon.open span:nth-child(1) {
     top: 18px;
     -webkit-transform: rotate(135deg);
     -moz-transform: rotate(135deg);
@@ -142,14 +166,14 @@
     transform: rotate(135deg);
 }
 
-#nav-icon1.open span:nth-child(2),
-#nav-icon2.open span:nth-child(2){
+#open-icon.open span:nth-child(2),
+#close-icon.open span:nth-child(2) {
     opacity: 0;
     left: -60px;
 }
 
-#nav-icon1.open span:nth-child(3),
-#nav-icon2.open span:nth-child(3){
+#open-icon.open span:nth-child(3),
+#close-icon.open span:nth-child(3) {
     top: 18px;
     -webkit-transform: rotate(-135deg);
     -moz-transform: rotate(-135deg);
@@ -157,20 +181,21 @@
     transform: rotate(-135deg);
 }
 
-
-
-
-
-
-
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media only screen and (max-width:415px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 14px;}
-    .sidenav.byobtsm-open{
-        width:250px;
+@media only screen and (max-width: 415px) {
+    .sidenav {
+        padding-top: 15px;
     }
-    #byobtsm-content-wrapper.byobtsm-open {
-        margin-left:250px;
+
+    .sidenav a {
+        font-size: 14px;
+    }
+
+    .sidenav.byobsm-open {
+        width: 250px;
+    }
+
+    #byobsm-content-wrapper.byobsm-open {
+        margin-left: 250px;
     }
 }
