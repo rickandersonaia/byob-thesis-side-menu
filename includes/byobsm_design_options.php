@@ -10,7 +10,7 @@ class byobsm_design_options {
 
 	public function open_button() {
 		$fsc                                   = $this->font_size_color();
-		$fonts                                 = $this->font_size_color();
+		$fonts                                 = $this->fonts();
 		$background_color                      = $this->background_color();
 		$padding                               = $this->padding_full();
 		$padding['customize_padding']['label'] = __( 'Customize Button Padding', 'byobsm' );
@@ -19,7 +19,7 @@ class byobsm_design_options {
 		$position                              = $this->positioning();
 		$border                                = $this->border();
 
-		return array_merge( $fsc, $fonts, $background_color, $padding, $margin, $position );
+		return array_merge( $fsc, $fonts, $background_color, $border, $padding, $margin, $position );
 	}
 
 	public function open_button_icon() {
@@ -33,7 +33,7 @@ class byobsm_design_options {
 
 	public function open_button_hover() {
 		$fsc              = $this->font_size_color();
-		$fonts            = $this->font_size_color();
+		$fonts            = $this->fonts();
 		$background_color = $this->background_color();
 		$border           = $this->border();
 
@@ -49,7 +49,7 @@ class byobsm_design_options {
 
 	public function close_button() {
 		$fsc                                   = $this->font_size_color();
-		$fonts                                 = $this->font_size_color();
+		$fonts                                 = $this->fonts();
 		$background_color                      = $this->background_color();
 		$padding                               = $this->padding_full();
 		$padding['customize_padding']['label'] = __( 'Customize Button Padding', 'byobsm' );
@@ -72,7 +72,7 @@ class byobsm_design_options {
 
 	public function close_button_hover() {
 		$fsc              = $this->font_size_color();
-		$fonts            = $this->font_size_color();
+		$fonts            = $this->fonts();
 		$background_color = $this->background_color();
 		$border           = $this->border();
 
@@ -563,6 +563,16 @@ class byobsm_design_options {
 					'add_border' => 'show_border'
 				)
 			),
+			'border-color-opacity'         => array(
+				'type'        => 'text',
+				'width'       => 'short',
+				'label'       => __( 'Border Color Opacity', 'byobtsm' ),
+				'tooltip'     => __( 'The value should be less than 1 - in decimal format', 'byobtsm' ),
+				'placeholder' => __( '0.9 - 0.1', 'byobtsm' ),
+				'parent'      => array(
+					'add_border' => 'show_border'
+				)
+			),
 			'border-radius'        => array(
 				'type'   => 'text',
 				'width'  => 'short',
@@ -587,7 +597,7 @@ class byobsm_design_options {
 				),
 				'placeholder' => '3px 3px 3px'
 			),
-			'shadow_color_opacity' => array(
+			'shadow-color-opacity' => array(
 				'type'        => 'text',
 				'width'       => 'short',
 				'label'       => __( 'Shadow Color Opacity', 'byobtsm' ),

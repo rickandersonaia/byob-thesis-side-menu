@@ -67,6 +67,24 @@ class byob_thesis_side_menu extends thesis_box {
 			if ( ! class_exists( 'byobsm_design_options' ) ) {
 				include_once( BYOBSM_PATH . '/includes/byobsm_design_options.php' );
 			}
+			if ( ! class_exists( 'byobsm_generate_css_rules' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_generate_css_rules.php' );
+			}
+			if ( ! class_exists( 'byobsm_button_css' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_button_css.php' );
+			}
+			if ( ! class_exists( 'byobsm_icon_css' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_icon_css.php' );
+			}
+			if ( ! class_exists( 'byobsm_menu_css' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_menu_css.php' );
+			}
+			if ( ! class_exists( 'byobsm_overlay_css' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_overlay_css.php' );
+			}
+			if ( ! class_exists( 'byobsm_static_css' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_static_css.php' );
+			}
 		}
 	}
 
@@ -257,6 +275,13 @@ class byob_thesis_side_menu extends thesis_box {
 		echo "$tab\t</div>\n";
 		echo "<span class=\"byobsm-open-text\"> $open_text</span>";
 		echo "$tab</$html>\n";
+	}
+
+	public function filter_css($css){
+		$button = new byobsm_button_css($this->class_options);
+		$button_css = $button->get_button_styles();
+
+		return $css . $button_css;
 	}
 
 }
