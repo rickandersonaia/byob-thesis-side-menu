@@ -54,7 +54,7 @@ class byobsm_design_options {
 		$padding                               = $this->padding_full();
 		$padding['customize_padding']['label'] = __( 'Customize Button Padding', 'byobsm' );
 		$margin                                = $this->margin_full();
-		$margin['customize_margin']['label']  = __( 'Customize Button Margin', 'byobsm' );
+		$margin['customize_margin']['label']   = __( 'Customize Button Margin', 'byobsm' );
 		$position                              = $this->positioning();
 		$border                                = $this->border();
 
@@ -86,30 +86,14 @@ class byobsm_design_options {
 		return array_merge( $icon_color );
 	}
 
+	public function overlay(){
+		return $this->background_color();
+	}
+
 	public function navigation() {
 		global $thesis;
 
-		$nav['menu_selector']              = array(
-			'type'        => 'text',
-			'width'       => 'long',
-			'label'       => __( 'Menu Selector', 'byobtsm' ),
-			'tooltip'     => __( 'Enter the selector that this style will apply to.  Include the # or .', 'byobtsm' ),
-			'placeholder' => __( '.my-menu', 'byobtsm' )
-		);
-		$nav['remove_typ_class']           = array(
-			'type'    => 'checkbox',
-			'label'   => __( 'Remove the typical <code>.menu</code> class', 'byobtsm' ),
-			'options' => array(
-				'remove' => __( 'Check to remove the default Thesis class', 'byobtsm' ),
-			)
-		);
-		$nav['submenu_style']              = array(
-			'type'    => 'checkbox',
-			'label'   => __( 'This is a submenu style', 'byobtsm' ),
-			'options' => array(
-				'submenu' => __( 'Check if this style is to apply to a submenu only', 'byobtsm' ),
-			)
-		);
+
 		$nav['customize_colors']           = array(
 			'type'       => 'checkbox',
 			'label'      => __( 'Show Menu Color options', 'byobtsm' ),
@@ -191,11 +175,11 @@ class byobsm_design_options {
 			)
 		);
 
-		$nav['submenu_width']    = array(
+		$nav['menu_width']       = array(
 			'type'        => 'text',
 			'width'       => 'tiny',
-			'label'       => __( 'Submenu Width', 'byobtsm' ),
-			'placeholder' => '150'
+			'label'       => __( 'Menu Width - desktop & tablet', 'byobtsm' ),
+			'placeholder' => '400'
 		);
 		$nav['link_decoration']  = array(
 			'type'    => 'select',
@@ -213,6 +197,7 @@ class byobsm_design_options {
 		$fsc   = $this->font_size_color();
 		$fonts = $this->fonts();
 		unset( $fsc['color'] );
+		unset( $fsc['opacity'] );
 
 		return array_merge( $nav, $fsc, $fonts );
 	}

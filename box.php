@@ -172,7 +172,7 @@ class byob_thesis_side_menu extends thesis_box {
 					'overlay_styles' => array(
 						'type' => 'object',
 						'label' => __('Overlay Styles', 'byobsm'),
-						'fields' => ''
+						'fields' => $fields->overlay()
 					)
 				)
 			)
