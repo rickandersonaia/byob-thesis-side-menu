@@ -47,10 +47,14 @@ class byobsm_design_options {
 	}
 
 	public function open_button_icon_hover() {
-		$icon_color                   = $this->color();
-		$icon_color['color']['label'] = __( 'Choose an Icon Color', 'byobsm' );
+		$icon_color                                        = $this->background_color();
+		$icon_color['customize_background_color']['label'] = __( 'Customize Icon Color', 'byobsm' );
+		$icon_color['customize_background_color']['options']['show_color']
+		                                                   = __( 'Check to show icon color options', 'byobsm' );
+		$icon_color['background-color']['label']           = __( 'Choose an Icon Color', 'byobsm' );
+		$icon_color['background-opacity']['label']         = __( 'Color Opacity', 'byobsm' );
 
-		return array_merge( $icon_color );
+		return $icon_color;
 	}
 
 	public function close_button() {
@@ -391,39 +395,39 @@ class byobsm_design_options {
 					'customize_positioning' => 'show'
 				)
 			),
-			'top'         => array(
-				'type'        => 'text',
-				'width'       => 'short',
-				'label'       => __( 'Top', 'byobsm' ),
-				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
-				'parent'      => array(
+			'top'                   => array(
+				'type'    => 'text',
+				'width'   => 'short',
+				'label'   => __( 'Top', 'byobsm' ),
+				'tooltip' => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'  => array(
 					'customize_positioning' => 'show'
 				)
 			),
-			'right'         => array(
-				'type'        => 'text',
-				'width'       => 'short',
-				'label'       => __( 'Right', 'byobsm' ),
-				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
-				'parent'      => array(
+			'right'                 => array(
+				'type'    => 'text',
+				'width'   => 'short',
+				'label'   => __( 'Right', 'byobsm' ),
+				'tooltip' => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'  => array(
 					'customize_positioning' => 'show'
 				)
 			),
-			'bottom'         => array(
-				'type'        => 'text',
-				'width'       => 'short',
-				'label'       => __( 'Bottom', 'byobsm' ),
-				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
-				'parent'      => array(
+			'bottom'                => array(
+				'type'    => 'text',
+				'width'   => 'short',
+				'label'   => __( 'Bottom', 'byobsm' ),
+				'tooltip' => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'  => array(
 					'customize_positioning' => 'show'
 				)
 			),
-			'left'         => array(
-				'type'        => 'text',
-				'width'       => 'short',
-				'label'       => __( 'Left', 'byobsm' ),
-				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
-				'parent'      => array(
+			'left'                  => array(
+				'type'    => 'text',
+				'width'   => 'short',
+				'label'   => __( 'Left', 'byobsm' ),
+				'tooltip' => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'  => array(
 					'customize_positioning' => 'show'
 				)
 			),
