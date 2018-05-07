@@ -61,6 +61,19 @@ class byobsm_generate_css_rules {
 
 	}
 
+	public function text_padding() {
+		global $thesis;
+		$design = $this->design;
+		$top    = ! empty( $design['padding-top_text'] ) ? $thesis->api->css->number( $design['padding-top_text'] ) : '0px';
+		$right  = ! empty( $design['padding-right_text'] ) ? $thesis->api->css->number( $design['padding-right_text'] ) : '0px';
+		$bottom = ! empty( $design['padding-bottom_text'] ) ? $thesis->api->css->number( $design['padding-bottom_text'] ) : '0px';
+		$left   = ! empty( $design['padding-left_text'] ) ? $thesis->api->css->number( $design['padding-left_text'] ) : '0px';
+		$output = "\n\tpadding: $top $right $bottom $left;";
+
+		return $output;
+
+	}
+
 	public function margin() {
 		global $thesis;
 		$design = $this->design;
@@ -112,8 +125,24 @@ class byobsm_generate_css_rules {
 		$display  = ! empty( $design['display'] ) ? $design['display'] : '';
 		$float    = ! empty( $design['float'] ) ? $design['float'] : '';
 		$clear    = ! empty( $design['clear'] ) ? $design['clear'] : '';
+		$top    = ! empty( $design['top'] ) ? $thesis->api->css->number($design['top']) : '';
+		$right    = ! empty( $design['right'] ) ? $thesis->api->css->number($design['right']) : '';
+		$bottom    = ! empty( $design['bottom'] ) ? $thesis->api->css->number($design['bottom']) : '';
+		$left    = ! empty( $design['left'] ) ? $thesis->api->css->number($design['left']) : '';
 		if ( ! empty( $position ) ) {
 			$output .= "\n\tposition: $position;";
+		}
+		if ( ! empty( $top ) ) {
+			$output .= "\n\ttop: $top;";
+		}
+		if ( ! empty( $right ) ) {
+			$output .= "\n\tright: $right;";
+		}
+		if ( ! empty( $bottom ) ) {
+			$output .= "\n\tbottom: $bottom;";
+		}
+		if ( ! empty( $left ) ) {
+			$output .= "\n\tleft: $left;";
 		}
 		if ( ! empty( $display ) ) {
 			$output .= "\n\tdisplay: $display;";
@@ -199,7 +228,7 @@ class byobsm_generate_css_rules {
 			$output .= "\n\tfont-style: $font_style;";
 		}
 		if ( ! empty( $font_variant ) ) {
-			$output .= "\n\tfont-varient: $font_variant;";
+			$output .= "\n\tfont-variant: $font_variant;";
 		}
 		if ( ! empty( $text_transform ) ) {
 			$output .= "\n\ttext-transform: $text_transform;";

@@ -92,13 +92,14 @@
 .byobsm-close-text {
     font-size: 18px;
     line-height: 18px;
-    padding: 9px;
+    padding: 8px 0px 0px 10px;
     display: inline-block;
     cursor: pointer;
 }
 
 .byobsm-close-text {
     color:#f1f1f1;
+    padding: 8px 10px 0px 0px;
 }
 
 /* icon styles */

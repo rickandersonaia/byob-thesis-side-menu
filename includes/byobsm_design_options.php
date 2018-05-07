@@ -11,6 +11,7 @@ class byobsm_design_options {
 	public function open_button() {
 		$fsc                                   = $this->font_size_color();
 		$fonts                                 = $this->fonts();
+		$text_padding                          = $this->padding_text();
 		$background_color                      = $this->background_color();
 		$padding                               = $this->padding_full();
 		$padding['customize_padding']['label'] = __( 'Customize Button Padding', 'byobsm' );
@@ -19,16 +20,21 @@ class byobsm_design_options {
 		$position                              = $this->positioning();
 		$border                                = $this->border();
 
-		return array_merge( $fsc, $fonts, $background_color, $border, $padding, $margin, $position );
+		return array_merge( $fsc, $fonts, $text_padding, $background_color, $border, $padding, $margin, $position );
 	}
 
 	public function open_button_icon() {
-		$icon_color                                 = $this->color();
-		$icon_color['color']['label']               = __( 'Choose an Icon Color', 'byobsm' );
-		$icon_padding                               = $this->padding_full();
-		$icon_padding['customize_padding']['label'] = __( 'Customize Icon Padding', 'byobsm' );
+		$icon_color                                        = $this->background_color();
+		$icon_color['customize_background_color']['label'] = __( 'Customize Icon Color', 'byobsm' );
+		$icon_color['customize_background_color']['options']['show_color']
+		                                                   = __( 'Check to show icon color options', 'byobsm' );
+		$icon_color['background-color']['label']           = __( 'Choose an Icon Color', 'byobsm' );
+		$icon_color['background-opacity']['label']         = __( 'Color Opacity', 'byobsm' );
+		$icon_padding                                      = $this->margin_full();
+		$icon_padding['customize_margin']['label']         = __( 'Customize Icon Margin', 'byobsm' );
+		$position                                          = $this->positioning();
 
-		return array_merge( $icon_color, $icon_padding );
+		return array_merge( $icon_color, $icon_padding, $position );
 	}
 
 	public function open_button_hover() {
@@ -50,6 +56,7 @@ class byobsm_design_options {
 	public function close_button() {
 		$fsc                                   = $this->font_size_color();
 		$fonts                                 = $this->fonts();
+		$text_padding                          = $this->padding_text();
 		$background_color                      = $this->background_color();
 		$padding                               = $this->padding_full();
 		$padding['customize_padding']['label'] = __( 'Customize Button Padding', 'byobsm' );
@@ -58,16 +65,19 @@ class byobsm_design_options {
 		$position                              = $this->positioning();
 		$border                                = $this->border();
 
-		return array_merge( $fsc, $fonts, $margin, $padding, $background_color, $border, $position );
+		return array_merge( $fsc, $fonts, $text_padding, $background_color, $border, $padding, $margin, $position );
 	}
 
 	public function close_button_icon() {
-		$icon_color                                 = $this->color();
-		$icon_color['color']['label']               = __( 'Choose an Icon Color', 'byobsm' );
-		$icon_padding                               = $this->padding_full();
-		$icon_padding['customize_padding']['label'] = __( 'Customize Icon Padding', 'byobsm' );
+		$icon_color                                        = $this->background_color();
+		$icon_color['customize_background_color']['label'] = __( 'Customize Icon Color', 'byobsm' );
+		$icon_color['background-color']['label']           = __( 'Choose an Icon Color', 'byobsm' );
+		$icon_color['background-opacity']['label']         = __( 'Color Opacity', 'byobsm' );
+		$icon_padding                                      = $this->padding_full();
+		$icon_padding['customize_padding']['label']        = __( 'Customize Icon Padding', 'byobsm' );
+		$position                                          = $this->positioning();
 
-		return array_merge( $icon_color, $icon_padding );
+		return array_merge( $icon_color, $icon_padding, $position );
 	}
 
 	public function close_button_hover() {
@@ -86,7 +96,7 @@ class byobsm_design_options {
 		return array_merge( $icon_color );
 	}
 
-	public function overlay(){
+	public function overlay() {
 		return $this->background_color();
 	}
 
@@ -327,7 +337,7 @@ class byobsm_design_options {
 
 	public function background_color() {
 		$background = array(
-			'customize_backgrpound_color' => array(
+			'customize_background_color' => array(
 				'type'       => 'checkbox',
 				'label'      => __( 'Customize background color', 'byobsm' ),
 				'options'    => array(
@@ -335,21 +345,21 @@ class byobsm_design_options {
 				),
 				'dependents' => array( 'show_color' )
 			),
-			'background-color'            => array(
+			'background-color'           => array(
 				'type'   => 'color',
 				'label'  => __( 'Choose your own background color', 'byobsm' ),
 				'parent' => array(
-					'customize_backgrpound_color' => 'show_color'
+					'customize_background_color' => 'show_color'
 				)
 			),
-			'background-opacity'          => array(
+			'background-opacity'         => array(
 				'type'        => 'text',
 				'width'       => 'short',
 				'label'       => __( 'Background Color Opacity', 'byobsm' ),
 				'tooltip'     => __( 'The value should be less than 1 - in decimal format', 'byobsm' ),
 				'placeholder' => __( '0.9 - 0.1', 'byobsm' ),
 				'parent'      => array(
-					'customize_backgrpound_color' => 'show_color'
+					'customize_background_color' => 'show_color'
 				)
 			)
 		);
@@ -378,6 +388,42 @@ class byobsm_design_options {
 					'initial'  => __( 'initial', 'byobsm' )
 				),
 				'parent'  => array(
+					'customize_positioning' => 'show'
+				)
+			),
+			'top'         => array(
+				'type'        => 'text',
+				'width'       => 'short',
+				'label'       => __( 'Top', 'byobsm' ),
+				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'      => array(
+					'customize_positioning' => 'show'
+				)
+			),
+			'right'         => array(
+				'type'        => 'text',
+				'width'       => 'short',
+				'label'       => __( 'Right', 'byobsm' ),
+				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'      => array(
+					'customize_positioning' => 'show'
+				)
+			),
+			'bottom'         => array(
+				'type'        => 'text',
+				'width'       => 'short',
+				'label'       => __( 'Bottom', 'byobsm' ),
+				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'      => array(
+					'customize_positioning' => 'show'
+				)
+			),
+			'left'         => array(
+				'type'        => 'text',
+				'width'       => 'short',
+				'label'       => __( 'Left', 'byobsm' ),
+				'tooltip'     => __( 'This can take positive and negative values', 'byobsm' ),
+				'parent'      => array(
 					'customize_positioning' => 'show'
 				)
 			),
@@ -484,6 +530,51 @@ class byobsm_design_options {
 		);
 	}
 
+	public function padding_text() {
+		return array(
+			'customize_text_padding' => array(
+				'type'       => 'checkbox',
+				'label'      => __( 'Customize the padding around the text', 'byobtsm' ),
+				'options'    => array(
+					'show_text_padding' => __( 'Check to show padding options', 'byobtsm' ),
+				),
+				'dependents' => array( 'show_text_padding' )
+			),
+			'padding-top_text'       => array(
+				'type'   => 'text',
+				'width'  => 'tiny',
+				'label'  => __( 'Top Padding', 'byobtsm' ),
+				'parent' => array(
+					'customize_text_padding' => 'show_text_padding'
+				)
+			),
+			'padding-bottom_text'    => array(
+				'type'   => 'text',
+				'width'  => 'tiny',
+				'label'  => __( 'Bottom Padding', 'byobtsm' ),
+				'parent' => array(
+					'customize_text_padding' => 'show_text_padding'
+				)
+			),
+			'padding-left_text'      => array(
+				'type'   => 'text',
+				'width'  => 'tiny',
+				'label'  => __( 'Left Padding', 'byobtsm' ),
+				'parent' => array(
+					'customize_text_padding' => 'show_text_padding'
+				)
+			),
+			'padding-right_text'     => array(
+				'type'   => 'text',
+				'width'  => 'tiny',
+				'label'  => __( 'Right Padding', 'byobtsm' ),
+				'parent' => array(
+					'customize_text_padding' => 'show_text_padding'
+				)
+			)
+		);
+	}
+
 	public function margin_full() {
 		return array(
 			'customize_margin' => array(
@@ -563,7 +654,7 @@ class byobsm_design_options {
 					'add_border' => 'show_border'
 				)
 			),
-			'border-color-opacity'         => array(
+			'border-color-opacity' => array(
 				'type'        => 'text',
 				'width'       => 'short',
 				'label'       => __( 'Border Color Opacity', 'byobtsm' ),

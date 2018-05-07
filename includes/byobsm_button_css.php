@@ -32,7 +32,7 @@ class byobsm_button_css {
 			$output = '';
 			$output_start = "\n$s{";
 			$output_end = "\n}";
-			if(!empty($this->design[$option]['customize_backgrpound_color'])){
+			if(!empty($this->design[$option]['customize_background_color'])){
 				$output .= $g->background_color();
 			}
 			if(!empty($this->design[$option]['customize_padding'])){
@@ -41,14 +41,14 @@ class byobsm_button_css {
 			if(!empty($this->design[$option]['customize_margin'])){
 				$output .= $g->margin();
 			}
-			if(!empty($this->design[$option]['customize_border'])){
+			if(!empty($this->design[$option]['add_border'])){
 				$output .= $g->border();
 			}
 			if(!empty($this->design[$option]['customize_positioning'])){
 				$output .= $g->positioning();
 			}
 			if(!empty($output)){
-				$final_output = $output_start . $output . $output_end;
+				$final_output .= $output_start . $output . $output_end;
 			}
 
 		}
@@ -74,11 +74,14 @@ class byobsm_button_css {
 			if(!empty($this->design[$option]['line-height'])){
 				$output .= $g->line_height();
 			}
+			if(!empty($this->design[$option]['customize_text_padding'])){
+				$output .= $g->text_padding();
+			}
 			if(!empty($this->design[$option]['additional_styles'])){
 				$output .= $g->additional_font_styles();
 			}
 			if(!empty($output)){
-				$final_output = $output_start . $output . $output_end;
+				$final_output .= $output_start . $output . $output_end;
 			}
 
 		}
