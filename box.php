@@ -201,7 +201,7 @@ class byob_thesis_side_menu extends thesis_box {
 
 	public function preload() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_styles' ) );
+//		add_action( 'wp_enqueue_scripts', array( $this, 'add_styles' ) );
 		add_action( 'hook_before_html', array( $this, 'insert_menu' ), 99 );
 		add_action( 'hook_after_html', array( $this, 'close_main' ), 1 );
 	}
@@ -212,6 +212,15 @@ class byob_thesis_side_menu extends thesis_box {
 
 	public function add_styles() {
 		wp_enqueue_style( 'byobsm-side-menu', BYOBSM_URL . '/assets/css/byobsm-styles.css' );
+	}
+
+	public function admin_init() {
+		global $thesis;
+		wp_enqueue_style('thesis-options');
+		wp_enqueue_style('thesis-colors', THESIS_CSS_URL. '/colors.css', array('thesis-options'), $thesis->version);
+		wp_enqueue_script('thesis-options');
+		wp_enqueue_script('js-color', THESIS_JS_URL. '/jscolor/jscolor.js', array('thesis-options'), $thesis->version, true);
+		wp_enqueue_script('thesis-colors', THESIS_JS_URL. '/colors.js', array('thesis-options', 'js-color'), $thesis->version, true);
 	}
 
 	public function insert_menu() {
@@ -279,9 +288,22 @@ class byob_thesis_side_menu extends thesis_box {
 
 	public function filter_css($css){
 		$button = new byobsm_button_css($this->class_options);
-		$button_css = $button->get_button_styles();
+		$static_css = new byobsm_static_css();
 
-		return $css . $button_css;
+		$new = "\n/* Begin BYOB Thesis Sliding Menu Styles */";
+		$new .= "\n/* *** Static Styles *** */";
+		$new .= $static_css->get_static_css();
+		$new .= "\n/* *** Open/Close Menu Button Styles *** */";
+		$new .= $button->get_button_styles();
+		$new .= $button->get_button_text_styles();
+		$new .= "\n/* *** Open/Close Icon Styles *** */";
+		$new .= '';
+		$new .= "\n/* *** Menu Styles *** */";
+		$new .= '';
+		$new .= "\n/* *** Overlay Styles *** */";
+		$new .= '';
+		$new .= "\n/* End BYOB Thesis Sliding Menu Styles */";
+		return $css . $new;
 	}
 
 }

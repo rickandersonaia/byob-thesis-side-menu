@@ -56,6 +56,32 @@ class byobsm_button_css {
 	}
 
 	public function get_button_text_styles(){
+		$final_output = '';
+		foreach ($this->button_text_selectors as $option => $s){
+			$g = new byobsm_generate_css_rules($this->design[$option]);
+			$output = '';
+			$output_start = "\n$s{";
+			$output_end = "\n}";
+			if(!empty($this->design[$option]['font-family'])){
+				$output .= $g->font_family($this->design[$option]['font-family']);
+			}
+			if(!empty($this->design[$option]['font-size'])){
+				$output .= $g->font_size($this->design[$option]['font-size']);
+			}
+			if(!empty($this->design[$option]['color'])){
+				$output .= $g->font_color();
+			}
+			if(!empty($this->design[$option]['line-height'])){
+				$output .= $g->line_height();
+			}
+			if(!empty($this->design[$option]['additional_styles'])){
+				$output .= $g->additional_font_styles();
+			}
+			if(!empty($output)){
+				$final_output = $output_start . $output . $output_end;
+			}
 
+		}
+		return $final_output;
 	}
 }

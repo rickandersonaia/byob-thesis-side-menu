@@ -94,6 +94,7 @@
     line-height: 18px;
     padding: 9px;
     display: inline-block;
+    cursor: pointer;
 }
 
 .byobsm-close-text {

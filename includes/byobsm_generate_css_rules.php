@@ -106,24 +106,114 @@ class byobsm_generate_css_rules {
 
 	public function positioning() {
 		global $thesis;
-		$design         = $this->design;
-		$output = '';
-		$position   = ! empty( $design['position'] ) ? $design['position'] : '';
-		$display   = ! empty( $design['display'] ) ? $design['display'] : '';
-		$float   = ! empty( $design['float'] ) ? $design['float'] : '';
-		$clear   = ! empty( $design['clear'] ) ? $design['clear'] : '';
-		if(!empty($position)){
+		$design   = $this->design;
+		$output   = '';
+		$position = ! empty( $design['position'] ) ? $design['position'] : '';
+		$display  = ! empty( $design['display'] ) ? $design['display'] : '';
+		$float    = ! empty( $design['float'] ) ? $design['float'] : '';
+		$clear    = ! empty( $design['clear'] ) ? $design['clear'] : '';
+		if ( ! empty( $position ) ) {
 			$output .= "\n\tposition: $position;";
 		}
-		if(!empty($display)){
+		if ( ! empty( $display ) ) {
 			$output .= "\n\tdisplay: $display;";
 		}
-		if(!empty($float)){
+		if ( ! empty( $float ) ) {
 			$output .= "\n\tfloat: $float;";
 		}
-		if(!empty($clear)){
+		if ( ! empty( $clear ) ) {
 			$output .= "\n\tclear: $clear;";
 		}
+
+		return $output;
+	}
+
+	public function font_family( $name ) {
+		global $thesis;
+		// initialize the return value to false
+		$output = '';
+		if ( ! empty( $name ) ) {
+			// if there is a design option - use it
+			$font   = $thesis->api->fonts->family( $name );
+			$output = "\n\tfont-family: $font;";
+		}
+
+		return $output;
+	}
+
+	// takes the design option id ($name) and a default size
+	// returns a formatted font size - or false
+	public function font_size( $size ) {
+		global $thesis;
+		// initialize the return value to false
+		$output = '';
+		if ( ! empty( $size ) ) {
+			// if there is a design option - use it
+			$font   = $thesis->api->css->number( $size );
+			$output = "\n\tfont-size: $font;";
+		}
+
+		return $output;
+	}
+
+	public function font_color() {
+		$design  = $this->design;
+		$output  = '';
+		$color   = ! empty( $design['color'] ) ? $design['color'] : '';
+		$opacity = ! empty( $design['opacity'] ) ? $design['opacity'] : '';
+		if ( ! empty( $color ) ) {
+			$final_color = $this->setup_color( $color, $opacity );
+			$output      = "\n\tcolor: $final_color;";
+		}
+
+		return $output;
+	}
+
+	public function line_height() {
+		global $thesis;
+		$design = $this->design;
+		$output = '';
+		if ( ! empty( $design['line-height'] ) ) {
+			$output = "\n\tline-height:" . $thesis->api->css->number( $design['line-height'] ) . ";";
+		}
+
+		return $output;
+	}
+
+	public function additional_font_styles() {
+		global $thesis;
+		$design         = $this->design;
+		$output         = '';
+		$font_weight    = ! empty( $design['font-weight'] ) ? $design['font-weight'] : '';
+		$font_style     = ! empty( $design['font-style'] ) ? $design['font-style'] : '';
+		$font_variant   = ! empty( $design['font-variant'] ) ? $design['font-variant'] : '';
+		$text_transform = ! empty( $design['text-transform'] ) ? $design['text-transform'] : '';
+		$text_align     = ! empty( $design['text-align'] ) ? $design['text-align'] : '';
+		$letter_spacing = ! empty( $design['letter-spacing'] ) ? $design['letter-spacing'] : '';
+		$text_shadow    = ! empty( $design['text-shadow'] ) ? $design['text-shadow'] : '';
+
+		if ( ! empty( $font_weight ) ) {
+			$output .= "\n\tfont-weight: $font_weight;";
+		}
+		if ( ! empty( $font_style ) ) {
+			$output .= "\n\tfont-style: $font_style;";
+		}
+		if ( ! empty( $font_variant ) ) {
+			$output .= "\n\tfont-varient: $font_variant;";
+		}
+		if ( ! empty( $text_transform ) ) {
+			$output .= "\n\ttext-transform: $text_transform;";
+		}
+		if ( ! empty( $text_align ) ) {
+			$output .= "\n\ttext-align: $text_align;";
+		}
+		if ( ! empty( $letter_spacing ) ) {
+			$output .= "\n\tletter-spacing: " . $thesis->api->css->number( $letter_spacing ) . ";";
+		}
+		if ( ! empty( $text_shadow ) ) {
+			$output .= "\n\ttext-shadow: $text_shadow;";
+		}
+
 		return $output;
 	}
 
