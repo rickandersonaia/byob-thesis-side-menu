@@ -14,10 +14,17 @@ class byobsm_generate_css_rules {
 		$this->design = $design;
 	}
 
-	public function background_color() {
+	public function background_color($state = '') {
+		if(!empty($state)){ // $state is used for menu sytles: link, hover, current
+			$bc_option = $state . '_background-color';
+			$bo_option = $state . '_background-opacity';
+		}else{
+			$bc_option = 'background-color';
+			$bo_option = 'background-opacity';
+		}
 		$final_color      = '';
-		$background_color = ! empty( $this->design['background-color'] ) ? $this->design['background-color'] : '';
-		$opacity          = ! empty( $this->design['background-opacity'] ) ? $this->design['background-opacity'] : '';
+		$background_color = ! empty( $this->design[$bc_option] ) ? $this->design[$bc_option] : '';
+		$opacity          = ! empty( $this->design[$bo_option] ) ? $this->design[$bo_option] : '';
 		if ( ! empty( $background_color ) ) {
 			$color       = $this->setup_color( $background_color, $opacity );
 			$final_color = "\n\tbackground-color: $color;";
@@ -245,6 +252,8 @@ class byobsm_generate_css_rules {
 
 		return $output;
 	}
+	
+
 
 
 	public function hex2rgba( $color, $opacity = false ) {

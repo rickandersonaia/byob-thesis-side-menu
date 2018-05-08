@@ -288,6 +288,7 @@ class byob_thesis_side_menu extends thesis_box {
 		$button = new byobsm_button_css($this->class_options);
 		$static_css = new byobsm_static_css();
 		$icon_css = new byobsm_icon_css($this->class_options);
+		$menu_css = new byobsm_menu_css($this->class_options);
 
 		$new = "\n/* Begin BYOB Thesis Sliding Menu Styles */";
 		$new .= "\n/* *** Static Styles *** */";
@@ -299,7 +300,10 @@ class byob_thesis_side_menu extends thesis_box {
 		$new .= $icon_css->get_icon_styles();
 		$new .= $icon_css->get_icon_span_styles();
 		$new .= "\n/* *** Menu Styles *** */";
-		$new .= '';
+		$new .= $menu_css->get_sidenav_styles();
+		$new .= $menu_css->get_menu_link_styles();
+		$new .= $menu_css->get_menu_hover_styles();
+		$new .= $menu_css->get_menu_current_styles();
 		$new .= "\n/* *** Overlay Styles *** */";
 		$new .= '';
 		$new .= "\n/* End BYOB Thesis Sliding Menu Styles */";

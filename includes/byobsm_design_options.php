@@ -116,21 +116,21 @@ class byobsm_design_options {
 			),
 			'dependents' => array( 'show' )
 		);
-		$nav['link_text_color']            = array(
+		$nav['link_text-color']            = array(
 			'type'   => 'color',
-			'label'  => __( 'Link Text Color - <span class="note">or choose your own color</span>', 'byobtsm' ),
+			'label'  => __( 'Link Text Color', 'byobtsm' ),
 			'parent' => array(
 				'customize_colors' => 'show'
 			)
 		);
-		$nav['link_background_color']      = array(
+		$nav['link_background-color']      = array(
 			'type'   => 'color',
-			'label'  => __( 'Link Custom Background Color - <span class="note">or choose your own color</span>', 'byobtsm' ),
+			'label'  => __( 'Link Background Color', 'byobtsm' ),
 			'parent' => array(
 				'customize_colors' => 'show'
 			)
 		);
-		$nav['link_background_opacity']    = array(
+		$nav['link_background-opacity']    = array(
 			'type'        => 'text',
 			'width'       => 'short',
 			'label'       => __( 'Link Background Color Opacity', 'byobtsm' ),
@@ -142,19 +142,19 @@ class byobsm_design_options {
 		);
 		$nav['hover_text_color']           = array(
 			'type'   => 'color',
-			'label'  => __( 'Hover Text Color - <span class="note">or choose your own color</span>', 'byobtsm' ),
+			'label'  => __( 'Hover Text Color ', 'byobtsm' ),
 			'parent' => array(
 				'customize_colors' => 'show'
 			)
 		);
-		$nav['hover_background_color']     = array(
+		$nav['hover_background-color']     = array(
 			'type'   => 'color',
-			'label'  => __( 'Hover Custom Background Color - <span class="note">or choose your own color</span>', 'byobtsm' ),
+			'label'  => __( 'Hover Background Color', 'byobtsm' ),
 			'parent' => array(
 				'customize_colors' => 'show'
 			)
 		);
-		$nav['hover_background_opacity']   = array(
+		$nav['hover_background-opacity']   = array(
 			'type'        => 'text',
 			'width'       => 'short',
 			'label'       => __( 'Hover Background Color Opacity', 'byobtsm' ),
@@ -166,19 +166,19 @@ class byobsm_design_options {
 		);
 		$nav['current_text_color']         = array(
 			'type'   => 'color',
-			'label'  => __( 'Current Text Color - <span class="note">or choose your own color</span>', 'byobtsm' ),
+			'label'  => __( 'Current Text Color', 'byobtsm' ),
 			'parent' => array(
 				'customize_colors' => 'show'
 			)
 		);
-		$nav['current_background_color']   = array(
+		$nav['current_background-color']   = array(
 			'type'   => 'color',
-			'label'  => __( 'Current Custom Background Color', 'byobtsm' ),
+			'label'  => __( 'Current Background Color', 'byobtsm' ),
 			'parent' => array(
 				'customize_colors' => 'show'
 			)
 		);
-		$nav['current_background_opacity'] = array(
+		$nav['current_background-opacity'] = array(
 			'type'        => 'text',
 			'width'       => 'short',
 			'label'       => __( 'Current Background Color Opacity', 'byobtsm' ),
@@ -189,31 +189,31 @@ class byobsm_design_options {
 			)
 		);
 
-		$nav['menu_width']       = array(
+		$nav['menu_width']                     = array(
 			'type'        => 'text',
 			'width'       => 'tiny',
 			'label'       => __( 'Menu Width - desktop & tablet', 'byobtsm' ),
 			'placeholder' => '400'
 		);
-		$nav['link_decoration']  = array(
+		$nav['link_decoration']                = array(
 			'type'    => 'select',
 			'label'   => __( 'Menu Link Decoration', 'byobtsm' ),
 			'options' => $thesis->api->css->properties['text-decoration']
 		);
-		$nav['hover_decoration'] = array(
+		$nav['hover_decoration']               = array(
 			'type'    => 'select',
 			'label'   => __( 'Menu Hover Decoration', 'byobtsm' ),
 			'options' => $thesis->api->css->properties['text-decoration']
 		);
-		$nav['padding']          = $thesis->api->css->options['padding'];
-		$nav['padding']['label'] = __( 'Menu Item Padding', 'byobtsm' );
+		$padding                               = $this->padding_full();
+		$padding['customize_padding']['label'] = __( 'Customize Menu Item Padding', 'byobsm' );
 
 		$fsc   = $this->font_size_color();
 		$fonts = $this->fonts();
 		unset( $fsc['color'] );
 		unset( $fsc['opacity'] );
 
-		return array_merge( $nav, $fsc, $fonts );
+		return array_merge( $fsc, $nav, $padding, $fonts );
 	}
 
 
