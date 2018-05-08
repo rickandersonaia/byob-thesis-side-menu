@@ -25,4 +25,5 @@ This is a Thesis 2 "Box".  As such it is intalled similarly to any other Thesis 
 4. Open Thesis >> Skin Editor and add the box to all of your templates.  The location
 of the box will be where the "Open Menu" button is located.
 5. Set options in Thesis >> Skin Content
+6. Save Thesis >> Skin Design options to reset the CSS
 6. Adjust styles in Thesis >> Boxes >> BYOB Side Menu
