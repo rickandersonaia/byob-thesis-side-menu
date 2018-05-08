@@ -35,8 +35,26 @@ class byobsm_menu_css {
 		if ( ! empty( $design['menu_styles']['customize_colors'] ) ) {
 			$output .= $g->background_color( 'link' );
 		}
+
+		if ( ! empty( $output ) ) {
+			$final_output .= $output_start . $output . $output_end;
+		}
+
+		return $final_output;
+	}
+
+	public function get_sidenav_width(){
+		global $thesis;
+		$design   = $this->design;
+		$selector = '.sidenav.byobsm-open';
+
+		$final_output = '';
+		$output       = '';
+		$output_start = "\n$selector{";
+		$output_end   = "\n}";
+
 		if ( ! empty( $design['menu_styles']['menu_width'] ) ) {
-			$output .= "\n\twidth:" . $thesis->api->css->number( $design['menu_styles']['menu_width'] . ";" );
+			$output .= "\n\twidth:" . $thesis->api->css->number( $design['menu_styles']['menu_width'] ) . ";";
 		}
 
 		if ( ! empty( $output ) ) {

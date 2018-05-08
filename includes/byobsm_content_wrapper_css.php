@@ -2,32 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: ander
- * Date: 5/6/2018
- * Time: 11:41 AM
+ * Date: 5/8/2018
+ * Time: 9:03 AM
  */
 
-class byobsm_overlay_css {
+class byobsm_content_wrapper_css {
 	public $design = array();
-
 
 	public function __construct( $design ) {
 		$this->design = $design;
 	}
 
-	public function get_overlay_styles(){
-		// overlay background color
+	public function get_content_wrapper_styles(){
 		global $thesis;
 		$design   = $this->design;
-		$selector = '#byobsm-overlay.byobsm-content-overlay';
-		$g        = new byobsm_generate_css_rules( $design['overlay_styles'] );
+		$selector = '#byobsm-content-wrapper.byobsm-open';
 
 		$final_output = '';
 		$output       = '';
 		$output_start = "\n$selector{";
 		$output_end   = "\n}";
 
-		if(!empty($design['overlay_styles']['customize_background_color'])){
-			$output .= $g->background_color();
+		if ( ! empty( $design['menu_styles']['menu_width'] ) ) {
+			$output .= "\n\tmargin-left:" . $thesis->api->css->number( $design['menu_styles']['menu_width'] ) . ";";
 		}
 
 		if ( ! empty( $output ) ) {

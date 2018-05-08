@@ -85,6 +85,9 @@ class byob_thesis_side_menu extends thesis_box {
 			if ( ! class_exists( 'byobsm_static_css' ) ) {
 				include_once( BYOBSM_PATH . '/includes/byobsm_static_css.php' );
 			}
+			if ( ! class_exists( 'byobsm_content_wrapper_css' ) ) {
+				include_once( BYOBSM_PATH . '/includes/byobsm_content_wrapper_css.php' );
+			}
 		}
 	}
 
@@ -142,54 +145,54 @@ class byob_thesis_side_menu extends thesis_box {
 				'label'   => __( 'Sliding Menu Style Options', 'byobsm' ),
 				'select'  => __( 'Choose the Elements to configure:', 'byobsm' ),
 				'objects' => array(
-					'open_button' => array(
+					'open_button'             => array(
 						'type'   => 'object',
 						'label'  => __( 'Open Menu Button Styles', 'byobsm' ),
 						'fields' => $fields->open_button()
 					),
-					'open_button_icon' => array(
-						'type' => 'object',
-						'label' => __('Open Menu Icon Styles', 'byobsm'),
+					'open_button_icon'        => array(
+						'type'   => 'object',
+						'label'  => __( 'Open Menu Icon Styles', 'byobsm' ),
 						'fields' => $fields->open_button_icon()
 					),
-					'open_button_hover' => array(
-						'type' => 'object',
-						'label' => __('Open Menu Button Hover Styles', 'byobsm'),
+					'open_button_hover'       => array(
+						'type'   => 'object',
+						'label'  => __( 'Open Menu Button Hover Styles', 'byobsm' ),
 						'fields' => $fields->open_button_hover()
 					),
-					'open_button_icon_hover' => array(
-						'type' => 'object',
-						'label' => __('Open Menu Icon Hover Styles', 'byobsm'),
+					'open_button_icon_hover'  => array(
+						'type'   => 'object',
+						'label'  => __( 'Open Menu Icon Hover Styles', 'byobsm' ),
 						'fields' => $fields->open_button_icon_hover()
 					),
-					'close_button' => array(
-						'type' => 'object',
-						'label' => __('Close Menu Button Styles', 'byobsm'),
+					'close_button'            => array(
+						'type'   => 'object',
+						'label'  => __( 'Close Menu Button Styles', 'byobsm' ),
 						'fields' => $fields->close_button()
 					),
-					'close_button_icon' => array(
-						'type' => 'object',
-						'label' => __('Close Menu Icon Styles', 'byobsm'),
+					'close_button_icon'       => array(
+						'type'   => 'object',
+						'label'  => __( 'Close Menu Icon Styles', 'byobsm' ),
 						'fields' => $fields->close_button_icon()
 					),
-					'close_button_hover' => array(
-						'type' => 'object',
-						'label' => __('Close Menu Button Hover Styles', 'byobsm'),
+					'close_button_hover'      => array(
+						'type'   => 'object',
+						'label'  => __( 'Close Menu Button Hover Styles', 'byobsm' ),
 						'fields' => $fields->close_button_hover()
 					),
 					'close_button_icon_hover' => array(
-						'type' => 'object',
-						'label' => __('Close Menu Icon Hover Styles', 'byobsm'),
+						'type'   => 'object',
+						'label'  => __( 'Close Menu Icon Hover Styles', 'byobsm' ),
 						'fields' => $fields->close_button_icon_hover()
 					),
-					'menu_styles' => array(
-						'type' => 'object',
-						'label' => __('Menu Style Configuration', 'byobsm'),
+					'menu_styles'             => array(
+						'type'   => 'object',
+						'label'  => __( 'Menu Style Configuration', 'byobsm' ),
 						'fields' => $fields->navigation()
 					),
-					'overlay_styles' => array(
-						'type' => 'object',
-						'label' => __('Overlay Styles', 'byobsm'),
+					'overlay_styles'          => array(
+						'type'   => 'object',
+						'label'  => __( 'Overlay Styles', 'byobsm' ),
 						'fields' => $fields->overlay()
 					)
 				)
@@ -216,9 +219,12 @@ class byob_thesis_side_menu extends thesis_box {
 
 	public function admin_init() {
 		global $thesis;
-		wp_enqueue_style('thesis-colors', THESIS_CSS_URL. '/colors.css', array('thesis-options'), $thesis->version);
-		wp_enqueue_script('js-color', THESIS_JS_URL. '/jscolor/jscolor.js', array('thesis-options'), $thesis->version, true);
-		wp_enqueue_script('thesis-colors', THESIS_JS_URL. '/colors.js', array('thesis-options', 'js-color'), $thesis->version, true);
+		wp_enqueue_style( 'thesis-colors', THESIS_CSS_URL . '/colors.css', array( 'thesis-options' ), $thesis->version );
+		wp_enqueue_script( 'js-color', THESIS_JS_URL . '/jscolor/jscolor.js', array( 'thesis-options' ), $thesis->version, true );
+		wp_enqueue_script( 'thesis-colors', THESIS_JS_URL . '/colors.js', array(
+			'thesis-options',
+			'js-color'
+		), $thesis->version, true );
 	}
 
 	public function insert_menu() {
@@ -284,11 +290,13 @@ class byob_thesis_side_menu extends thesis_box {
 		echo "$tab</$html>\n";
 	}
 
-	public function filter_css($css){
-		$button = new byobsm_button_css($this->class_options);
-		$static_css = new byobsm_static_css();
-		$icon_css = new byobsm_icon_css($this->class_options);
-		$menu_css = new byobsm_menu_css($this->class_options);
+	public function filter_css( $css ) {
+		$button              = new byobsm_button_css( $this->class_options );
+		$static_css          = new byobsm_static_css();
+		$icon_css            = new byobsm_icon_css( $this->class_options );
+		$menu_css            = new byobsm_menu_css( $this->class_options );
+		$overlay_css         = new byobsm_overlay_css( $this->class_options );
+		$content_wrapper_css = new byobsm_content_wrapper_css( $this->class_options );
 
 		$new = "\n/* Begin BYOB Thesis Sliding Menu Styles */";
 		$new .= "\n/* *** Static Styles *** */";
@@ -301,12 +309,16 @@ class byob_thesis_side_menu extends thesis_box {
 		$new .= $icon_css->get_icon_span_styles();
 		$new .= "\n/* *** Menu Styles *** */";
 		$new .= $menu_css->get_sidenav_styles();
+		$new .= $menu_css->get_sidenav_width();
 		$new .= $menu_css->get_menu_link_styles();
 		$new .= $menu_css->get_menu_hover_styles();
 		$new .= $menu_css->get_menu_current_styles();
 		$new .= "\n/* *** Overlay Styles *** */";
-		$new .= '';
+		$new .= $overlay_css->get_overlay_styles();
+		$new .= "\n/* *** Content Wrapper Styles *** */";
+		$new .= $content_wrapper_css->get_content_wrapper_styles();
 		$new .= "\n/* End BYOB Thesis Sliding Menu Styles */";
+
 		return $css . $new;
 	}
 

@@ -107,7 +107,6 @@ class byobsm_design_options {
 	public function navigation() {
 		global $thesis;
 
-
 		$nav['customize_colors']           = array(
 			'type'       => 'checkbox',
 			'label'      => __( 'Show Menu Color options', 'byobtsm' ),
